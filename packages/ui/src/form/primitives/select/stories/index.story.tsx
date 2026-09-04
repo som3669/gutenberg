@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Select from '../';
 
 const meta: Meta< typeof Select.Root > = {
-	title: 'Design System/Components/Form/Primitives/Select',
+	title: 'Components/@wordpress-ui/Form/Primitives/Select',
+	id: 'design-system-components-form-primitives-select',
 	component: Select.Root,
 	subcomponents: {
 		'Select.Trigger': Select.Trigger,
