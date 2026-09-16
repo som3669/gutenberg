@@ -26,12 +26,11 @@ const handleEntitySearch = async (
 	fetchSearchSuggestions,
 	withCreateSuggestion,
 	pageOnFront,
-	pageForPosts,
-	transformSuggestions
+	pageForPosts
 ) => {
 	const { isInitialSuggestions } = suggestionsQuery;
 
-	let results = await fetchSearchSuggestions( val, suggestionsQuery );
+	const results = await fetchSearchSuggestions( val, suggestionsQuery );
 
 	// Identify front page and update type to match.
 	results.map( ( result ) => {
@@ -45,16 +44,6 @@ const handleEntitySearch = async (
 
 		return result;
 	} );
-
-	// Let the consumer filter and order the results before they are shown. This
-	// runs before the "CREATE" option is appended below so that the option
-	// always remains last.
-	if ( transformSuggestions ) {
-		results = transformSuggestions( results, {
-			isInitialSuggestions: !! isInitialSuggestions,
-			searchTerm: val,
-		} );
-	}
 
 	// If displaying initial suggestions just return plain results.
 	if ( isInitialSuggestions ) {
@@ -90,12 +79,7 @@ const handleEntitySearch = async (
 export default function useSearchHandler(
 	suggestionsQuery,
 	allowDirectEntry,
-	withCreateSuggestion,
-	// Currently unused. Callers have always passed it, but it has never been
-	// read, so `noURLSuggestion` on LinkControl has no effect. Kept in place so
-	// that fixing or removing it stays a separate change.
-	withURLSuggestion,
-	transformSuggestions
+	withCreateSuggestion
 ) {
 	const { fetchSearchSuggestions, pageOnFront, pageForPosts } = useSelect(
 		( select ) => {
@@ -125,8 +109,7 @@ export default function useSearchHandler(
 						fetchSearchSuggestions,
 						withCreateSuggestion,
 						pageOnFront,
-						pageForPosts,
-						transformSuggestions
+						pageForPosts
 				  );
 		},
 		[
@@ -136,7 +119,6 @@ export default function useSearchHandler(
 			pageForPosts,
 			suggestionsQuery,
 			withCreateSuggestion,
-			transformSuggestions,
 		]
 	);
 }
