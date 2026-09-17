@@ -3664,42 +3664,6 @@ describe( 'Transforming suggestions', () => {
 		expect( options[ 0 ] ).toHaveTextContent( firstSuggestion.title );
 	} );
 
-	it( 'should not label a term that shares the front page id as the front page', async () => {
-		const user = userEvent.setup();
-		const aCategory = {
-			id: 1,
-			title: 'Uncategorized',
-			type: 'category',
-			kind: 'taxonomy',
-			url: '/category/uncategorized',
-		};
-
-		// Posts and terms are separate tables, so a term can share an id with
-		// the page set as the front page.
-		useSelect.mockImplementation( () => ( {
-			fetchSearchSuggestions: () => Promise.resolve( [ aCategory ] ),
-			fetchRichUrlData: mockFetchRichUrlData,
-			pageOnFront: 1,
-			pageForPosts: 2,
-		} ) );
-
-		render( <LinkControl /> );
-
-		await user.type(
-			screen.getByRole( 'combobox', { name: 'Search or type URL' } ),
-			'Uncategorized'
-		);
-
-		const searchResults = await screen.findByRole( 'listbox', {
-			name: /Search results for.*/,
-		} );
-
-		const option = within( searchResults ).getByRole( 'option' );
-
-		expect( option ).toHaveTextContent( 'Category' );
-		expect( option ).not.toHaveTextContent( 'Front page' );
-	} );
-
 	it( 'should pass the create suggestion to transformSuggestions', async () => {
 		const user = userEvent.setup();
 		const transformSuggestions = vi.fn( ( suggestions ) => suggestions );

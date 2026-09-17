@@ -32,13 +32,8 @@ const handleEntitySearch = async (
 
 	const results = await fetchSearchSuggestions( val, suggestionsQuery );
 
-	// Identify front page and update type to match. Posts, terms and media can
-	// share an id, so only pages are considered.
+	// Identify front page and update type to match.
 	results.map( ( result ) => {
-		if ( result.type !== 'page' ) {
-			return result;
-		}
-
 		if ( Number( result.id ) === pageOnFront ) {
 			result.isFrontPage = true;
 			return result;
