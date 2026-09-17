@@ -4,6 +4,7 @@
 
 ### Internal
 
+-   Disable `custom-property-pattern` for this package so private `--_wp-*` tokens remain allowed.
 -   Run rendered Grid tests in Vitest Browser Mode ([#80995](https://github.com/WordPress/gutenberg/pull/80995)).
 
 ## 0.7.0 (2026-09-10)
