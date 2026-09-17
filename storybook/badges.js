@@ -33,7 +33,10 @@ const statusBadges = Object.fromEntries(
 			icon,
 			title: `${ icon } ${ label }`,
 			tooltip: {
-				title: `Component status: ${ label }`,
+				// Read off the tag rather than the label, so the sentence
+				// stays a sentence: "Use: with caution", not "Use: Use with
+				// caution".
+				title: `Use: ${ tag.slice( 'use-'.length ).replace( /-/g, ' ' ) }`,
 				desc: statusDescriptions[ key ],
 			},
 		},
