@@ -26,6 +26,14 @@ const statusDescriptions = {
 	unaudited: 'Not audited yet against the design system.',
 };
 
+/**
+ * Tooltip titles that do not fit the "Use: ..." sentence. `unaudited` is not
+ * advice about use, it is the absence of any.
+ */
+const statusTitles = {
+	unaudited: 'Not audited yet',
+};
+
 const statusBadges = Object.fromEntries(
 	Object.entries( statuses ).map( ( [ key, { label, icon, tag } ] ) => [
 		tag,
@@ -36,7 +44,9 @@ const statusBadges = Object.fromEntries(
 				// Read off the tag rather than the label, so the sentence
 				// stays a sentence: "Use: with caution", not "Use: Use with
 				// caution".
-				title: `Use: ${ tag.slice( 'use-'.length ).replace( /-/g, ' ' ) }`,
+				title:
+					statusTitles[ key ] ??
+					`Use: ${ tag.slice( 'use-'.length ).replace( /-/g, ' ' ) }`,
 				desc: statusDescriptions[ key ],
 			},
 		},
